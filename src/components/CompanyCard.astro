@@ -1,0 +1,39 @@
+---
+import type { Company } from '../data/companies';
+
+interface Props {
+  company: Company;
+  index: number;
+}
+
+const { company, index } = Astro.props;
+const searchText = [company.name, company.intro, company.roles.join(' '), company.skills.join(' ')].join(' ').toLowerCase();
+---
+<li
+  class={`company-card company-card--${company.accent}`}
+  data-company-card
+  data-search={searchText}
+  data-roles={company.roles.join('|').toLowerCase()}
+  data-skills={company.skills.join('|').toLowerCase()}
+  data-reveal
+>
+  <div class="company-card__topline">
+    <span class="index-number">0{index + 1} <span aria-hidden="true">/</span> starter profile</span>
+    <span class="status-dot"><span></span> Official link</span>
+  </div>
+  <div class="company-card__identity">
+    <div class={`company-mark company-mark--${company.accent}`} aria-hidden="true">{company.monogram}</div>
+    <div>
+      <h3>{company.name}</h3>
+      <p class="company-card__place">{company.location}</p>
+    </div>
+  </div>
+  <p class="company-card__intro">{company.intro}</p>
+  <div class="company-card__tags" aria-label="Unverified research topics">
+    {company.roles.slice(0, 2).map((role) => <span>{role}</span>)}
+  </div>
+  <div class="company-card__bottom">
+    <span class="micro-copy">Role tags are research prompts</span>
+    <a class="circle-link" href={`/company/${company.slug}`} aria-label={`Explore ${company.name} profile`}><span aria-hidden="true">↗</span></a>
+  </div>
+</li>

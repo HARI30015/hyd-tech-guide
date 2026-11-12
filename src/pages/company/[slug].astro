@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { companies, checkedOn } from '../../data/companies';
+
+export function getStaticPaths() {
+  return companies.map((company) => ({ params: { slug: company.slug }, props: { company } }));
+}
+
+const { company } = Astro.props;
+const title = `${company.name} Hyderabad profile | Hyderabad Tech Guide`;
+const description = `${company.name} Hyderabad company notes, official careers and student links, plus clearly marked unverified research topics.`;
+---
+<BaseLayout title={title} description={description}>
+  <main id="main" class="profile-page page-wrap">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/#companies">Company index</a><span aria-hidden="true">/</span><span aria-current="page">{company.name}</span></nav>
+
+    <header class={`profile-hero profile-hero--${company.accent}`} data-reveal>
+      <div class="profile-hero__copy">
+        <p class="eyebrow"><span class="eyebrow-index">STARTER PROFILE</span> HYDERABAD · INDIA</p>
+        <div class="profile-identity">
+          <div class={`company-mark company-mark--${company.accent}`} aria-hidden="true">{company.monogram}</div>
+          <div><h1>{company.name}</h1><p>{company.location}</p></div>
+        </div>
+        <p class="profile-hero__intro">{company.intro}</p>
+        <div class="profile-hero__actions">
+          <a class="button button--lime" href={company.careersUrl} target="_blank" rel="noreferrer">{company.careersLabel} <span aria-hidden="true">↗</span></a>
+          <a class="button button--ghost" href={company.studentUrl} target="_blank" rel="noreferrer">{company.studentLabel} <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="profile-hero__aside" aria-label="Data status">
+        <span class="status-stamp"><span class="status-dot"><span></span> Profile live</span></span>
+        <span class="profile-hero__index">0{companies.findIndex((item) => item.slug === company.slug) + 1}<small> / 03</small></span>
+        <p>Official links checked<br /><strong>{checkedOn}</strong></p>
+        <p class="small-caution">This is a student research guide, not an employer page or live jobs feed.</p>
+      </div>
+    </header>
+
+    <div class="profile-grid">
+      <section class="info-panel info-panel--verified" aria-labelledby="verified-title" data-reveal>
+        <div class="panel-heading"><span class="panel-index">01</span><p class="eyebrow">VERIFIED SOURCE</p></div>
+        <h2 id="verified-title">What the official page says.</h2>
+        <p>{company.verifiedContext}</p>
+        <div class="source-card">
+          <span class="source-card__icon" aria-hidden="true">↗</span>
+          <div><span class="micro-copy">OFFICIAL COMPANY SOURCE</span><a href={company.locationUrl} target="_blank" rel="noreferrer">Open {company.name}’s Hyderabad page <span aria-hidden="true">↗</span></a></div>
+        </div>
+        <p class="micro-copy">Checked {checkedOn}. Company information and openings can change.</p>
+      </section>
+
+      <section class="info-panel info-panel--unverified" aria-labelledby="research-title" data-reveal>
+        <div class="panel-heading"><span class="panel-index">02</span><p class="eyebrow">UNVERIFIED · STUDENT RESEARCH MAP</p></div>
+        <h2 id="research-title">Topics to explore.</h2>
+        <p>These are search and preparation prompts only. They are not confirmed fresher roles, current vacancies, or a list of employer-required skills.</p>
+        <h3>Role areas to research</h3>
+        <div class="topic-pills">{company.roles.map((role) => <span>{role}</span>)}</div>
+        <h3>Skill topics to review</h3>
+        <div class="topic-pills topic-pills--skills">{company.skills.map((skill) => <span>{skill}</span>)}</div>
+        <p class="note-warning"><span aria-hidden="true">✳</span> Check each job description for its actual location, eligibility, and skill requirements.</p>
+      </section>
+
+      <section class="pathway-panel" aria-labelledby="pathway-title" data-reveal>
+        <div class="panel-heading"><span class="panel-index">03</span><p class="eyebrow">OFFICIAL NEXT STEPS</p></div>
+        <div><h2 id="pathway-title">Look for the right opening.</h2><p>Visit the employer’s current listing. A general student or early-career page does not guarantee a Hyderabad opening.</p></div>
+        <div class="pathway-links">
+          <a href={company.careersUrl} target="_blank" rel="noreferrer"><span>01</span><span><strong>Current roles</strong><small>{company.careersLabel}</small></span><b aria-hidden="true">↗</b></a>
+          <a href={company.studentUrl} target="_blank" rel="noreferrer"><span>02</span><span><strong>Students & early career</strong><small>{company.studentLabel}</small></span><b aria-hidden="true">↗</b></a>
+        </div>
+      </section>
+
+      <section class="insights-panel" aria-labelledby="insights-title" data-reveal>
+        <div class="panel-heading"><span class="panel-index">04</span><p class="eyebrow">INTERVIEW & HIRING INSIGHTS</p></div>
+        <h2 id="insights-title">No rumours dressed as facts.</h2>
+        <div class="insight-columns">
+          <div class="insight-column"><p class="insight-label"><span class="insight-led insight-led--verified"></span> VERIFIED REPORTS</p>{company.verifiedInterviewNotes.length ? <ul>{company.verifiedInterviewNotes.map((note) => <li>{note}</li>)}</ul> : <p class="empty-note">No interview or hiring reports have been independently verified for this starter profile.</p>}</div>
+          <div class="insight-column"><p class="insight-label"><span class="insight-led insight-led--unverified"></span> UNVERIFIED COMMUNITY NOTES</p>{company.unverifiedInterviewNotes.length ? <ul>{company.unverifiedInterviewNotes.map((note) => <li>{note}</li>)}</ul> : <p class="empty-note">No community notes have been added. Nothing here should be treated as an interview question bank.</p>}</div>
+        </div>
+        <a class="text-link" href="/standards">See how reports are labeled <span aria-hidden="true">↗</span></a>
+      </section>
+    </div>
+    <div class="profile-end"><a class="text-link" href="/#companies"><span aria-hidden="true">←</span> Back to all companies</a><span>Student field notes · Hyderabad</span></div>
+  </main>
+</BaseLayout>

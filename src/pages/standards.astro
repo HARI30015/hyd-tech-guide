@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { checkedOn } from '../data/companies';
+---
+<BaseLayout title="How we source company information | Hyderabad Tech Guide" description="How Hyderabad Tech Guide separates official company facts from unverified student research prompts and community interview notes.">
+  <main id="main" class="standards-page page-wrap">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">How we source</span></nav>
+    <header class="standards-hero" data-reveal>
+      <p class="eyebrow"><span class="eyebrow-index">FIELD GUIDE / RULES</span> CLEAR LABELS, BETTER RESEARCH</p>
+      <h1>Know what’s <em>known.</em><br />And what isn’t.</h1>
+      <p>This guide is for research, not rumours. We link company facts to official sources and mark student-prep ideas as unverified until a role-specific job post confirms them.</p>
+    </header>
+    <div class="standards-cards">
+      <article class="standard-card standard-card--verified" data-reveal><span class="standard-card__number">01</span><p class="eyebrow">VERIFIED</p><h2>Direct links to the source.</h2><p>Company presence and career details are summarized from the employer’s own careers pages. Check the linked page again before acting; roles, dates, and eligibility change.</p><span class="standard-tag">Official source · checked {checkedOn}</span></article>
+      <article class="standard-card standard-card--unverified" data-reveal><span class="standard-card__number">02</span><p class="eyebrow">UNVERIFIED</p><h2>Research prompts, not promises.</h2><p>Role and skill tags help students explore. They are not verified employer requirements, active fresher openings, or evidence that a team is hiring in Hyderabad.</p><span class="standard-tag">Confirm with the exact job description</span></article>
+      <article class="standard-card standard-card--reports" data-reveal><span class="standard-card__number">03</span><p class="eyebrow">INTERVIEW REPORTS</p><h2>No invented experiences.</h2><p>Verified reports and unverified community notes are separated. This starter guide contains no interview reports, so it does not present made-up questions or hiring stories.</p><span class="standard-tag">Empty means we have no report</span></article>
+    </div>
+    <section class="standards-callout" data-reveal><div><p class="eyebrow">YOUR BEST NEXT STEP</p><h2>Read the job post<br />before the prep post.</h2></div><p>Check the official role’s location, graduation dates, eligibility, responsibilities, and listed skills. A company-wide program page may not have a matching Hyderabad opening.</p><a class="button button--lime" href="/#companies">Open the directory <span aria-hidden="true">↗</span></a></section>
+  </main>
+</BaseLayout>
